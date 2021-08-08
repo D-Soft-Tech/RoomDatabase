@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_listUserFragment_to_addUserFragment"
             app:destination="@id/addUserFragment" />
+        <argument
+            android:name="newUser"
+            app:argType="com.example.roomdatabase.data.User" />
     </fragment>
     <fragment
         android:id="@+id/addUserFragment"
