@@ -7,23 +7,28 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [User::class], version = 1, exportSchema = false)
 abstract class AppDB : RoomDatabase() {
-    abstract fun UserDao(): DbDao
+    abstract fun userDao(): DbDao
 
     companion object {
         @Volatile
         private var DB_INSTANCE: AppDB? = null
 
-        operator fun invoke(context: Context) = synchronized(this) {
+        operator fun invoke(context: Context): AppDB {
             val tempInstance = DB_INSTANCE
-            if (tempInstance == null) {
+
+            if (tempInstance != null) {
+                return tempInstance
+            }
+            // else the synchronized block below will be executed
+            synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDB::class.java,
                     "appDB"
                 ).build()
                 DB_INSTANCE = instance
+                return instance
             }
-            tempInstance
         }
     }
 }
