@@ -38,7 +38,7 @@ class AddUserFragment : Fragment() {
         _binding = FragmentAddUserBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        viewModel = ViewModelProvider(this).get(AppViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
 
         // Initialization of views
         firstName = binding.firstNameET
