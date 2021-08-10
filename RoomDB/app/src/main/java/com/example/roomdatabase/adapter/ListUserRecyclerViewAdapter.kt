@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.roomdatabase.R
 import com.example.roomdatabase.adapter.difUtil.ListUserRecyclerViewAdapterDiffUtil
 import com.example.roomdatabase.data.User
 import com.example.roomdatabase.databinding.RecyclerViewItemViewBinding
@@ -28,6 +29,7 @@ class ListUserRecyclerViewAdapter : RecyclerView.Adapter<ListUserRecyclerViewVie
             userFName.text = listOfUsers[position].firstName
             userLName.text = listOfUsers[position].lastName
             userAge.text = listOfUsers[position].age.toString()
+            userImage.setImageResource(R.drawable.ic_baseline_person_24)
         }
     }
 

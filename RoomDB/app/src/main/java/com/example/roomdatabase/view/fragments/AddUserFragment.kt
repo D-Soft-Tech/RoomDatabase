@@ -38,7 +38,7 @@ class AddUserFragment : Fragment() {
         _binding = FragmentAddUserBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        viewModel = ViewModelProvider(requireActivity()).get(AppViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(AppViewModel::class.java)
 
         // Initialization of views
         firstName = binding.firstNameET
@@ -48,16 +48,16 @@ class AddUserFragment : Fragment() {
 
         addUserBTN.setOnClickListener {
             val newUserFirstName = firstName.text.toString().trim()
-            val newUserLastName = firstName.text.toString().trim()
+            val newUserLastName = lastName.text.toString().trim()
             val newUserAge = age.text
 
             if (newUserAge?.let { it1 -> validInputFields(newUserFirstName, newUserLastName, it1) } == true) {
-                val newUser = User(Integer.parseInt(age.toString()), newUserFirstName, newUserLastName)
+                val newUser = User(newUserAge.toString().toInt(), newUserFirstName, newUserLastName)
                 // Save user into DB
                 viewModel.insetUserToDB(newUser)
                 Toast.makeText(requireContext(), "User Added Successfully", Toast.LENGTH_SHORT).show()
                 // Navigate to Listings screen
-                findNavController().navigate(R.id.action_listUserFragment_to_addUserFragment)
+                findNavController().navigate(R.id.action_addUserFragment_to_listUserFragment)
             } else {
                 Toast.makeText(requireContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show()
             }
@@ -67,7 +67,7 @@ class AddUserFragment : Fragment() {
     }
 
     private fun validInputFields(firstName: String, lastName: String, age: Editable): Boolean {
-        return !(TextUtils.isEmpty(firstName) && TextUtils.isEmpty(lastName) && age.isEmpty())
+        return !(TextUtils.isEmpty(firstName) && TextUtils.isEmpty(lastName) && age.trim().isEmpty())
     }
 
     override fun onDestroy() {

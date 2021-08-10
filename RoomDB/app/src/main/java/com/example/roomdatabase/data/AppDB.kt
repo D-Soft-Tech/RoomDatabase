@@ -13,7 +13,7 @@ abstract class AppDB : RoomDatabase() {
         @Volatile
         private var DB_INSTANCE: AppDB? = null
 
-        operator fun invoke(context: Context): AppDB {
+        fun getDatabase(context: Context): AppDB {
             val tempInstance = DB_INSTANCE
 
             if (tempInstance != null) {
