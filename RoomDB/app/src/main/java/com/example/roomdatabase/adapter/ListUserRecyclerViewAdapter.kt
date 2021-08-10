@@ -5,12 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.roomdatabase.R
+import com.example.roomdatabase.adapter.clickListeners.ListUserRecyclerViewClickListener
 import com.example.roomdatabase.adapter.difUtil.ListUserRecyclerViewAdapterDiffUtil
 import com.example.roomdatabase.data.User
 import com.example.roomdatabase.databinding.RecyclerViewItemViewBinding
 import com.example.roomdatabase.recyclerViewViewHolders.ListUserRecyclerViewViewHolder
 
-class ListUserRecyclerViewAdapter : RecyclerView.Adapter<ListUserRecyclerViewViewHolder>() {
+class ListUserRecyclerViewAdapter(
+    private val userClickListener: ListUserRecyclerViewClickListener
+) : RecyclerView.Adapter<ListUserRecyclerViewViewHolder>() {
     private var listOfUsers: List<User> = arrayListOf()
 
     override fun onCreateViewHolder(
@@ -30,6 +33,11 @@ class ListUserRecyclerViewAdapter : RecyclerView.Adapter<ListUserRecyclerViewVie
             userLName.text = listOfUsers[position].lastName
             userAge.text = listOfUsers[position].age.toString()
             userImage.setImageResource(R.drawable.ic_baseline_person_24)
+
+            // Click listener
+            itemView.setOnClickListener() {
+                userClickListener.userClickListener(listOfUsers[position])
+            }
         }
     }
 

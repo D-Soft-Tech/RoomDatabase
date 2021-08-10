@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/dimen30dp"
+    tools:context=".view.fragments.UpdateFragment">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/user_profile_picture"
+        app:layout_constraintBottom_toTopOf="@+id/hr_gl_2"
+        app:layout_constraintEnd_toStartOf="@+id/vt_gl_2"
+        app:layout_constraintStart_toStartOf="@+id/vt_gl_1"
+        app:layout_constraintTop_toTopOf="@+id/hr_gl_1"
+        tools:src="@tools:sample/avatars" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/updatePageUserFirstName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/hr_gl_2">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/updatePageFNameTIET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:maxLines="2"
+            android:hint="@string/first_name"
+            android:inputType="text"
+            android:textSize="@dimen/dimen16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/hr_gl_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/hr_gl_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vt_gl_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.20" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vt_gl_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.80" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/updatePageUserLastName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/updatePageUserFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/updatePageUserFirstName"
+        app:layout_constraintStart_toStartOf="@+id/updatePageUserFirstName">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/updatePageLNameTIET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:maxLines="2"
+            android:hint="@string/last_name"
+            android:inputType="text"
+            android:textSize="@dimen/dimen16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/updatePageUserAge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/updatePageUserLastName"
+        app:layout_constraintTop_toBottomOf="@+id/updatePageUserLastName"
+        app:layout_constraintStart_toStartOf="@+id/updatePageUserLastName">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/updatePageAgeTIET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:maxLines="2"
+            android:hint="@string/age"
+            android:inputType="number"
+            android:textSize="@dimen/dimen16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/submitUpdateBTN"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/update"
+        android:layout_marginTop="@dimen/dimen30dp"
+        app:layout_constraintEnd_toEndOf="@+id/updatePageUserAge"
+        app:layout_constraintStart_toStartOf="@+id/updatePageUserAge"
+        app:layout_constraintTop_toBottomOf="@+id/updatePageUserAge" />
+</androidx.constraintlayout.widget.ConstraintLayout>

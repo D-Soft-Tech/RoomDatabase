@@ -9,4 +9,8 @@ class Repository(private val localDbDao: DbDao) {
     suspend fun insertUser(user: User) {
         localDbDao.insetUser(user)
     }
+
+    suspend fun updateUser(userToBeUpdated: User) {
+        localDbDao.updateUser(userToBeUpdated)
+    }
 }

@@ -1,6 +1,8 @@
 package com.example.roomdatabase.data
 
 import android.app.Application
+import android.text.Editable
+import android.text.TextUtils
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -9,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class AppViewModel(application: Application) : AndroidViewModel(application) {
 
-    var allUsersInDB: LiveData<List<User>>
+    val allUsersInDB: LiveData<List<User>>
 
     private var repository: Repository
 
@@ -21,5 +23,13 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     fun insetUserToDB(user: User) {
         viewModelScope.launch(Dispatchers.IO) { repository.insertUser(user) }
+    }
+
+    fun updateUser(userToBeUpdated: User) {
+        viewModelScope.launch(Dispatchers.IO) { repository.updateUser(userToBeUpdated) }
+    }
+
+    fun validInputFields(firstName: String, lastName: String, age: Editable): Boolean {
+        return !(TextUtils.isEmpty(firstName) && TextUtils.isEmpty(lastName) && age.trim().isEmpty())
     }
 }

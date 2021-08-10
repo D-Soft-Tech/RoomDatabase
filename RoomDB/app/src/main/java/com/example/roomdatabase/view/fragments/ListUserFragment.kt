@@ -12,11 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.roomdatabase.R
 import com.example.roomdatabase.adapter.ListUserRecyclerViewAdapter
+import com.example.roomdatabase.adapter.clickListeners.ListUserRecyclerViewClickListener
 import com.example.roomdatabase.data.AppViewModel
+import com.example.roomdatabase.data.User
 import com.example.roomdatabase.databinding.FragmentListUserBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class ListUserFragment : Fragment() {
+class ListUserFragment : Fragment(), ListUserRecyclerViewClickListener {
 
     private var _binding: FragmentListUserBinding? = null
     private val binding get() = _binding!!
@@ -47,7 +49,7 @@ class ListUserFragment : Fragment() {
         listUserRV = binding.listOfUsersRv
 
         // initialize the RecyclerView Adapter
-        adapter = ListUserRecyclerViewAdapter()
+        adapter = ListUserRecyclerViewAdapter(this)
         // Initialize viewModel
         viewModel = ViewModelProvider(this).get(AppViewModel::class.java)
 
@@ -73,5 +75,10 @@ class ListUserFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun userClickListener(user: User) {
+        val action = ListUserFragmentDirections.actionListUserFragmentToUpdateFragment(user)
+        findNavController().navigate(action)
     }
 }

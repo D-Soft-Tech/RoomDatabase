@@ -51,8 +51,8 @@ class AddUserFragment : Fragment() {
             val newUserLastName = lastName.text.toString().trim()
             val newUserAge = age.text
 
-            if (newUserAge?.let { it1 -> validInputFields(newUserFirstName, newUserLastName, it1) } == true) {
-                val newUser = User(newUserAge.toString().toInt(), newUserFirstName, newUserLastName)
+            if (newUserAge?.let { it1 -> viewModel.validInputFields(newUserFirstName, newUserLastName, it1) } == true) {
+                val newUser = User(0, newUserAge.toString().toInt(), newUserFirstName, newUserLastName)
                 // Save user into DB
                 viewModel.insetUserToDB(newUser)
                 Toast.makeText(requireContext(), "User Added Successfully", Toast.LENGTH_SHORT).show()
@@ -64,10 +64,6 @@ class AddUserFragment : Fragment() {
         }
 
         return view
-    }
-
-    private fun validInputFields(firstName: String, lastName: String, age: Editable): Boolean {
-        return !(TextUtils.isEmpty(firstName) && TextUtils.isEmpty(lastName) && age.trim().isEmpty())
     }
 
     override fun onDestroy() {
