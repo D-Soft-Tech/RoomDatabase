@@ -2,6 +2,7 @@ package com.example.roomdatabase.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -18,4 +19,10 @@ interface DbDao {
 
     @Update
     suspend fun updateUser(userToBeUpdated: User)
+
+    @Delete
+    suspend fun deleteUser(userToBeDeleted: User)
+
+    @Query("DELETE FROM user_table")
+    suspend fun deleteAllUsers()
 }

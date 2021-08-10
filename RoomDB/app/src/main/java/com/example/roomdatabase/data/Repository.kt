@@ -13,4 +13,12 @@ class Repository(private val localDbDao: DbDao) {
     suspend fun updateUser(userToBeUpdated: User) {
         localDbDao.updateUser(userToBeUpdated)
     }
+
+    suspend fun deleteUser(userToBeDeleted: User) {
+        localDbDao.deleteUser(userToBeDeleted)
+    }
+
+    suspend fun deleteAllUsers() {
+        localDbDao.deleteAllUsers()
+    }
 }

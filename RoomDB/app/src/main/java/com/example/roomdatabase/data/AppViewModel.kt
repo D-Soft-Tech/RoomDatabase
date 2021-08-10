@@ -32,4 +32,16 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
     fun validInputFields(firstName: String, lastName: String, age: Editable): Boolean {
         return !(TextUtils.isEmpty(firstName) && TextUtils.isEmpty(lastName) && age.trim().isEmpty())
     }
+
+    fun deleteUser(userToBeDeleted: User) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteUser(userToBeDeleted)
+        }
+    }
+
+    fun deleteAllUser() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllUsers()
+        }
+    }
 }

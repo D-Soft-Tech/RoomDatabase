@@ -1,9 +1,13 @@
 package com.example.roomdatabase.view.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -33,6 +37,7 @@ class UpdateFragment : Fragment() {
     private lateinit var userLastName: TextView
     private lateinit var userAge: TextView
     private lateinit var submitUpdate: Button
+    private lateinit var inComingUserFromSafeArgs: User
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +53,7 @@ class UpdateFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(AppViewModel::class.java)
 
-        val inComingUserFromSafeArgs = args.clickedUser
+        inComingUserFromSafeArgs = args.clickedUser
 
         // Initializing views
         userFirstName = binding.updatePageFNameTIET
@@ -78,6 +83,9 @@ class UpdateFragment : Fragment() {
             }
         }
 
+        // Add menu
+        setHasOptionsMenu(true)
+
         return binding.root
     }
 
@@ -85,4 +93,31 @@ class UpdateFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.delet_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.delete) {
+            buildDialog(inComingUserFromSafeArgs).show()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun deleteUser(userToBeRemove: User) {
+        viewModel.deleteUser(userToBeRemove)
+        Toast.makeText(requireContext(), "User removed from database", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(R.id.action_updateFragment_to_listUserFragment)
+    }
+
+    private fun buildDialog(userToBeDeleted: User) = AlertDialog.Builder(requireContext()).apply {
+        setTitle("Remove ${userToBeDeleted.firstName} from Database")
+        setMessage("Are you sure you want to \nremove ${userToBeDeleted.firstName} from the Databse?")
+        setPositiveButton("Yes") { _, _ ->
+            deleteUser(userToBeDeleted)
+        }
+        setNegativeButton("No") { _, _ -> }
+    }.create()
 }
