@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/top_guide_line">
+        app:layout_constraintTop_toTopOf="@id/hr_guide_line_2">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/firstNameET"
@@ -70,10 +70,44 @@
         app:layout_constraintTop_toBottomOf="@+id/ageTIL" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/top_guide_line"
+        android:id="@+id/hr_guide_line_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.07" />
+        app:layout_constraintGuide_percent="0.03" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/hr_guide_line_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/add_fragment_vt_gl_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/add_fragment_vt_gl_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <ImageView
+        android:id="@+id/userProfilePicture"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/dimen10dp"
+        android:src="@drawable/ic_baseline_person_24"
+        android:contentDescription="@string/user_profile_picture"
+        app:layout_constraintBottom_toTopOf="@+id/firstNameTIL"
+        app:layout_constraintEnd_toStartOf="@+id/add_fragment_vt_gl_1"
+        app:layout_constraintStart_toStartOf="@+id/add_fragment_vt_gl_"
+        app:layout_constraintTop_toTopOf="@+id/hr_guide_line_1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
