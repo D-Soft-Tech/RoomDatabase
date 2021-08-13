@@ -19,7 +19,6 @@ import com.example.roomdatabase.R
 import com.example.roomdatabase.adapter.ListUserRecyclerViewAdapter
 import com.example.roomdatabase.adapter.clickListeners.ListUserRecyclerViewClickListener
 import com.example.roomdatabase.data.AppViewModel
-import com.example.roomdatabase.data.User
 import com.example.roomdatabase.databinding.FragmentListUserBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -85,9 +84,10 @@ class ListUserFragment : Fragment(), ListUserRecyclerViewClickListener {
         _binding = null
     }
 
-    override fun userClickListener(user: User) {
-        val action = ListUserFragmentDirections.actionListUserFragmentToUpdateFragment(user)
+    override fun userClickListener(userId: Int) {
+        val action = ListUserFragmentDirections.actionListUserFragmentToUpdateFragment(userId)
         findNavController().navigate(action)
+        Toast.makeText(requireContext(), "$userId", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

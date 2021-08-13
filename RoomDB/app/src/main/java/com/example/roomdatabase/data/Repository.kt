@@ -21,4 +21,8 @@ class Repository(private val localDbDao: DbDao) {
     suspend fun deleteAllUsers() {
         localDbDao.deleteAllUsers()
     }
+
+    fun getASingleUser(userId: Int): LiveData<User> {
+        return localDbDao.getASingleUser(userId)
+    }
 }

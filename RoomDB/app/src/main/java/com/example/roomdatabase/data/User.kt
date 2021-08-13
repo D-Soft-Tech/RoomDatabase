@@ -1,17 +1,16 @@
 package com.example.roomdatabase.data
 
-import android.os.Parcelable
+import android.graphics.Bitmap
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "user_table")
-@Parcelize
 data class User(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
 
     var age: Int,
     var firstName: String,
-    var lastName: String
-) : Parcelable
+    var lastName: String,
+    var profilePicture: Bitmap
+)

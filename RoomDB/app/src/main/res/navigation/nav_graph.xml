@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_listUserFragment_to_addUserFragment"
             app:destination="@id/addUserFragment" />
-        <argument
-            android:name="newUser"
-            app:argType="com.example.roomdatabase.data.User" />
         <action
             android:id="@+id/action_listUserFragment_to_updateFragment"
             app:destination="@id/updateFragment" />
@@ -38,7 +35,7 @@
             android:id="@+id/action_updateFragment_to_listUserFragment"
             app:destination="@id/listUserFragment" />
         <argument
-            android:name="clickedUser"
-            app:argType="com.example.roomdatabase.data.User" />
+            android:name="idOfClickedUser"
+            app:argType="integer" />
     </fragment>
 </navigation>
