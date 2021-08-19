@@ -79,4 +79,7 @@ dependencies {
 
     // Coil Image Library
     implementation "io.coil-kt:coil:0.13.0"
+
+    // Easy permissions library
+    implementation 'pub.devrel:easypermissions:3.0.0'
 }

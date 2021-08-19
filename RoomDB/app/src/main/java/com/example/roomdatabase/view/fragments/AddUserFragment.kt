@@ -20,14 +20,19 @@ import coil.request.ImageRequest
 import coil.request.SuccessResult
 import coil.transform.CircleCropTransformation
 import com.example.roomdatabase.R
+import com.example.roomdatabase.data.AppConstants.REQUEST_CODE_FOR_EXTERNAL_STORAGE
+import com.example.roomdatabase.data.AppConstants.checkForPermission
 import com.example.roomdatabase.data.AppConstants.getImageLoadDefinition
+import com.example.roomdatabase.data.AppConstants.requestForPermission
 import com.example.roomdatabase.data.AppViewModel
 import com.example.roomdatabase.data.User
 import com.example.roomdatabase.databinding.FragmentAddUserBinding
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
 
-class AddUserFragment : Fragment() {
+class AddUserFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     private var _binding: FragmentAddUserBinding? = null
     private val binding get() = _binding!!
 
@@ -59,30 +64,40 @@ class AddUserFragment : Fragment() {
         addUserBTN = binding.addNewUserBTN
         userImageView = binding.userProfilePicture
 
+//        val requestPermissionLauncher = registerForActivityResult(
+//            ActivityResultContracts.RequestPermission()
+//        ) { isGranted: Boolean ->
+//            if (isGranted) {
+//            } else {
+//            }
+//        }
+
         addUserBTN.setOnClickListener {
+
             val newUserFirstName = firstName.text.toString().trim()
             val newUserLastName = lastName.text.toString().trim()
             val newUserAge = age.text
 
             lifecycleScope.launch {
-                if (newUserAge?.let { it1 ->
-                    imageBitmap?.let { it2 ->
-                        viewModel.validInputFields(
-                                newUserFirstName,
-                                newUserLastName,
-                                it1,
-                                it2
-                            )
-                    }
-                } == true
+                if (newUserAge?.let
+                    { userAge ->
+                        imageBitmap?.let { userImageBitmap ->
+                            viewModel.validInputFields(
+                                    newUserFirstName,
+                                    newUserLastName,
+                                    userAge,
+                                    userImageBitmap
+                                )
+                        }
+                    } == true
                 ) {
-                    val newUser = imageBitmap?.let { it1 ->
+                    val newUser = imageBitmap?.let { imageBitmap ->
                         User(
                             0,
                             newUserAge.toString().toInt(),
                             newUserFirstName,
                             newUserLastName,
-                            it1
+                            imageBitmap
                         )
                     }
                     // Save user into DB
@@ -100,7 +115,7 @@ class AddUserFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-            }
+            } // End of LifeCycle Scope launch
         }
 
         // Set the content of the imageView to the image coming from the url 
@@ -128,7 +143,11 @@ class AddUserFragment : Fragment() {
 
         // Choose Profile picture
         userImageView.setOnClickListener {
-            profilePictureUri.launch("image/*")
+            if (checkForPermission(requireContext())) {
+                profilePictureUri.launch("image/*")
+            } else {
+                requestForPermission(this, REQUEST_CODE_FOR_EXTERNAL_STORAGE, getString(R.string.permission_rationale))
+            }
         }
 
         return view
@@ -147,6 +166,30 @@ class AddUserFragment : Fragment() {
         // Convert the image to a drawable
         val imageAsDrawable = (loader.execute(request) as SuccessResult).drawable
         (imageAsDrawable as BitmapDrawable).bitmap // Convert the drawable to Bitmap and return it
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+        when (requestCode) {
+            REQUEST_CODE_FOR_EXTERNAL_STORAGE -> {
+                Toast.makeText(requireContext(), getString(R.string.permission_granted), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            AppSettingsDialog.Builder(requireActivity()).build().show()
+        } else {
+            Toast.makeText(requireContext(), getString(R.string.permission_denied), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
     override fun onDestroy() {

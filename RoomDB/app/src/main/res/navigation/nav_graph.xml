@@ -15,7 +15,9 @@
             app:destination="@id/addUserFragment" />
         <action
             android:id="@+id/action_listUserFragment_to_updateFragment"
-            app:destination="@id/updateFragment" />
+            app:destination="@id/updateFragment"
+            app:enterAnim="@anim/enter_animation"
+            app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/addUserFragment"
@@ -33,7 +35,9 @@
         tools:layout="@layout/fragment_update" >
         <action
             android:id="@+id/action_updateFragment_to_listUserFragment"
-            app:destination="@id/listUserFragment" />
+            app:destination="@id/listUserFragment"
+            app:enterAnim="@anim/enter_animation"
+            app:exitAnim="@android:anim/slide_out_right" />
         <argument
             android:name="idOfClickedUser"
             app:argType="integer" />

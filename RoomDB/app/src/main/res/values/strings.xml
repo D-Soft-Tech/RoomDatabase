@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">RoomDatabase</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="list_of_users">List of Users</string>
     <string name="add_user">Add User</string>
@@ -16,4 +15,8 @@
     <string name="update">Update</string>
     <string name="delete_icon">delete icon</string>
     <string name="delete">Delete</string>
+    <string name="permission_granted">Permission granted</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="permission_denied_1">Permission denied ONE</string>
+    <string name="permission_rationale">This permission is necessary so that you can \n"set take a new picture to set as your profile picture. \nHowever, you decide to use a picture from your gallery instead.</string>
 </resources>

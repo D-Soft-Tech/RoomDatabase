@@ -10,7 +10,8 @@
 
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/user_image"
+        android:transitionName="update_page_image_transition_name"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/user_profile_picture"
@@ -27,12 +28,13 @@
         android:layout_marginTop="@dimen/dimen20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/user_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/hr_gl_2">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/updatePageFNameTIET"
+            android:transitionName="firstNameTN"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_bold"
@@ -83,6 +85,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/updatePageLNameTIET"
+            android:transitionName="lastNameTN"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_bold"
@@ -106,6 +109,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/updatePageAgeTIET"
+            android:transitionName="ageTN"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_bold"

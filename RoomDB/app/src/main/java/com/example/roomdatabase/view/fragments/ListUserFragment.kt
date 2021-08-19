@@ -1,5 +1,6 @@
 package com.example.roomdatabase.view.fragments
 
+import android.app.ActivityOptions
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +9,9 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.SearchView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -19,8 +22,13 @@ import com.example.roomdatabase.R
 import com.example.roomdatabase.adapter.ListUserRecyclerViewAdapter
 import com.example.roomdatabase.adapter.clickListeners.ListUserRecyclerViewClickListener
 import com.example.roomdatabase.data.AppViewModel
+import com.example.roomdatabase.data.User
 import com.example.roomdatabase.databinding.FragmentListUserBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.navigation.fragment.FragmentNavigator
+import android.util.Pair as UtilPair
+import android.util.*
+import androidx.navigation.ActivityNavigatorExtras
 
 class ListUserFragment : Fragment(), ListUserRecyclerViewClickListener {
 
@@ -84,10 +92,30 @@ class ListUserFragment : Fragment(), ListUserRecyclerViewClickListener {
         _binding = null
     }
 
-    override fun userClickListener(userId: Int) {
+    override fun userClickListener(userId: Int, profilePicImageView: ImageView, firstNameTextView: TextView, lastNameTextView: TextView, ageTextView: TextView, position: Int) {
+
+        val pair1: android.util.Pair<View, String> = UtilPair.create(profilePicImageView, "update_page_image_transition_name")
+        val pair2: android.util.Pair<View, String> = UtilPair.create(firstNameTextView, "firstNameTN")
+        val pair3: android.util.Pair<View, String> = UtilPair.create(lastNameTextView, "lastNameTN")
+        val pair4: android.util.Pair<View, String> = UtilPair.create(ageTextView, "ageTN")
+
+        val optionsCompat = ActivityOptions.makeSceneTransitionAnimation(activity, pair1, pair2, pair3, pair4)
+        val extras = ActivityNavigatorExtras(
+//            mapOf(
+//                profilePicImageView to "update_page_image_transition_name",
+//                firstNameTextView to "firstNameTN",
+//                lastNameTextView to "lastNameTN",
+//                ageTextView to "ageTN"
+//            )
+//        optionsCompat
+        )
+
         val action = ListUserFragmentDirections.actionListUserFragmentToUpdateFragment(userId)
         findNavController().navigate(action)
-        Toast.makeText(requireContext(), "$userId", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun userImageClickListener(user: User) {
+        // Call a dialog to show the user image just like in whatsapp
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -109,6 +137,9 @@ class ListUserFragment : Fragment(), ListUserRecyclerViewClickListener {
         }
         setNegativeButton("No") { _, _ -> }
     }.create()
+
+//    private fun showImageDialog() = AlertDialog.Builder(requireContext()).apply {
+//    }
 
     private fun deleteAllUsers() {
         viewModel.deleteAllUser()

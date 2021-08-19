@@ -8,4 +8,5 @@ class ListUserRecyclerViewViewHolder(binding: RecyclerViewItemViewBinding) : Rec
     val userFName = binding.firstName
     val userLName = binding.lastName
     val userAge = binding.age
+    val textViewsContainer = binding.txtViewsContainer
 }

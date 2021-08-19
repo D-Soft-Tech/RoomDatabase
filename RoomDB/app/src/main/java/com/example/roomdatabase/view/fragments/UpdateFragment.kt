@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -84,7 +85,7 @@ class UpdateFragment : Fragment() {
         userFirstName = binding.updatePageFNameTIET
         userLastName = binding.updatePageLNameTIET
         userAge = binding.updatePageAgeTIET
-        userImage = binding.imageView
+        userImage = binding.userImage
         submitUpdate = binding.submitUpdateBTN
 
         // User can update the profile picture at the click of the image
@@ -107,21 +108,22 @@ class UpdateFragment : Fragment() {
             val firstName = userFirstName.text.trim().toString()
             val lastName = userLastName.text.trim().toString()
             val age = userAge.text
-            if (localImageBitmap?.let { it1 ->
+            if (localImageBitmap?.let
+                { localImageBitmap ->
                     viewModel.validInputFields(
-                        firstName,
-                        lastName,
-                        age as Editable,
-                        it1
-                    )
+                            firstName,
+                            lastName,
+                            age as Editable,
+                            localImageBitmap
+                        )
                 } == true
             ) {
-                val usersNewDetails = localImageBitmap?.let { it1 ->
+                val usersNewDetails = localImageBitmap?.let { localImageBitmap ->
                     User(
                         inComingUserFromSafeArgs.id,
                         Integer.parseInt(age.toString()),
                         firstName, lastName,
-                        it1
+                        localImageBitmap
                     )
                 }
                 if (usersNewDetails != null) {
@@ -139,6 +141,18 @@ class UpdateFragment : Fragment() {
         setHasOptionsMenu(true)
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val animation = TransitionInflater.from(requireContext()).inflateTransition(
+            android.R.transition.move
+        )
+//        ChangeBounds()
+
+        sharedElementEnterTransition = animation
+//        sharedElementReturnTransition = animation
+//        binding.executePendingBindings()
     }
 
     override fun onDestroy() {

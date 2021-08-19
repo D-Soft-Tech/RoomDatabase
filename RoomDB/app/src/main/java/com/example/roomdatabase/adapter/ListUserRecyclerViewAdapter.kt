@@ -33,9 +33,14 @@ class ListUserRecyclerViewAdapter(
             userAge.text = listOfUsers[position].age.toString()
             userImage.setImageBitmap(listOfUsers[position].profilePicture)
 
+            // Set onClickListener on the constraintLayout
+            textViewsContainer.setOnClickListener {
+                userClickListener.userClickListener(listOfUsers[position].id, userImage, userFName, userLName, userAge, position)
+            }
+
             // Click listener
-            itemView.setOnClickListener() {
-                userClickListener.userClickListener(listOfUsers[position].id)
+            userImage.setOnClickListener() {
+                userClickListener.userImageClickListener(listOfUsers[position])
             }
         }
     }
