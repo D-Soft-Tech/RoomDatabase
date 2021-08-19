@@ -64,14 +64,6 @@ class AddUserFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         addUserBTN = binding.addNewUserBTN
         userImageView = binding.userProfilePicture
 
-//        val requestPermissionLauncher = registerForActivityResult(
-//            ActivityResultContracts.RequestPermission()
-//        ) { isGranted: Boolean ->
-//            if (isGranted) {
-//            } else {
-//            }
-//        }
-
         addUserBTN.setOnClickListener {
 
             val newUserFirstName = firstName.text.toString().trim()

@@ -22,12 +22,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.roomdatabase.R
+import com.example.roomdatabase.data.AppConstants.REQUEST_CODE_FOR_EXTERNAL_STORAGE
+import com.example.roomdatabase.data.AppConstants.checkForPermission
 import com.example.roomdatabase.data.AppConstants.getImageLoadDefinition
+import com.example.roomdatabase.data.AppConstants.requestForPermission
 import com.example.roomdatabase.data.AppViewModel
 import com.example.roomdatabase.data.User
 import com.example.roomdatabase.databinding.FragmentUpdateBinding
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
 
-class UpdateFragment : Fragment() {
+class UpdateFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     private var _binding: FragmentUpdateBinding? = null
     private val binding get() = _binding!!
 
@@ -101,7 +106,11 @@ class UpdateFragment : Fragment() {
         }
 
         userImage.setOnClickListener {
-            profilePictureChooserAction.launch("image/*")
+            if (checkForPermission(requireContext())) {
+                profilePictureChooserAction.launch("image/*")
+            } else {
+                requestForPermission(this, REQUEST_CODE_FOR_EXTERNAL_STORAGE, getString(R.string.permission_rationale))
+            }
         }
 
         submitUpdate.setOnClickListener {
@@ -155,11 +164,6 @@ class UpdateFragment : Fragment() {
 //        binding.executePendingBindings()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.delet_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
@@ -186,4 +190,33 @@ class UpdateFragment : Fragment() {
         }
         setNegativeButton("No") { _, _ -> }
     }.create()
+
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+        when (requestCode) {
+            REQUEST_CODE_FOR_EXTERNAL_STORAGE -> {
+                Toast.makeText(requireContext(), "Permission Granted", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            AppSettingsDialog.Builder(requireActivity()).build().show()
+        } else {
+            Toast.makeText(requireContext(), "Permission Denied", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }
