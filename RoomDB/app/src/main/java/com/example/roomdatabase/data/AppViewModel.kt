@@ -23,7 +23,7 @@ class AppViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         val dbDao = AppDB.getDatabase(application)
-            .userDao() // created an instance of DbDao via the database (i.e AppDB)
+            .getUserDao() // created an instance of DbDao via the database (i.e AppDB)
         repository =
             Repository(dbDao) // passed the dbDao created above to initialize the repository
         allUsersInDB = repository.allUsersInDB // initialize the above created variable allUserInDB
